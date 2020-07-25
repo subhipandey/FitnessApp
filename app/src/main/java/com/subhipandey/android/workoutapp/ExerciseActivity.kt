@@ -35,11 +35,10 @@ class ExerciseActivity : AppCompatActivity() {
         exerciseList = Constants.defaultExerciseList()
 
 
-
     }
 
     override fun onDestroy() {
-        if (restTimer != null){
+        if (restTimer != null) {
             restTimer!!.cancel()
             restProgress = 0
         }
@@ -67,32 +66,44 @@ class ExerciseActivity : AppCompatActivity() {
         exerciseTimer = object : CountDownTimer(exerciseTimerDuration * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 exerciseProgress++
-                progressBarExercise.progress =exerciseTimerDuration.toInt()-restProgress
+                progressBarExercise.progress = exerciseTimerDuration.toInt() - restProgress
                 tvExerciseTimer.text = (exerciseTimerDuration.toInt() - restProgress).toString()
             }
 
             override fun onFinish() {
-                Toast.makeText(
-                    this@ExerciseActivity,
-                    "Here we will start the next timer", Toast.LENGTH_SHORT
-                ).show()
+                if (currentExercisePosition < exerciseList?.size!! - 1) {
+                    setupRestView()
+                } else {
+                    Toast.makeText(
+                        this@ExerciseActivity,
+                        "You have finished 7 minutes workout", Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }.start()
     }
-    private fun setupExerciseView(){
+
+    private fun setupExerciseView() {
         llRestView.visibility = View.GONE
         llRestView.visibility = View.VISIBLE
-        if(exerciseTimer != null){
+        if (exerciseTimer != null) {
             exerciseTimer!!.cancel()
             exerciseProgress = 0
         }
         setExerciseProgressBar()
+        ivImage.setImageResource(exerciseList!![currentExercisePosition].getImage())
+        tvExerciseName.text = exerciseList!![currentExercisePosition].getName()
     }
-    private fun setupRestView(){
-        if(restTimer != null){
+
+    private fun setupRestView() {
+        llRestView.visibility = View.VISIBLE
+        llExerciseView.visibility = View.GONE
+
+        if (restTimer != null) {
             restTimer!!.cancel()
             restProgress = 0
         }
         setRestProgressBar()
     }
+
 }
