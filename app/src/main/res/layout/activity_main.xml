@@ -15,6 +15,7 @@
        android:contentDescription="@string/image"
        android:src="@drawable/img_main_page" />
 
+
    <LinearLayout
        android:id="@+id/llStart"
        android:layout_width="150dp"
