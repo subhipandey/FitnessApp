@@ -8,6 +8,7 @@ import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_exercise.*
 import java.lang.Exception
 import java.util.*
@@ -25,6 +26,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var exerciseList: ArrayList<ExerciseModel>? = null
     private var tts: TextToSpeech? = null
     private var player: MediaPlayer? = null
+
+    private var exerciseAdapter: ExerciseStatusAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +47,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         exerciseList = Constants.defaultExerciseList()
         setupRestView()
+
+        setupExerciseStatusRecyclerView()
 
 
     }
@@ -95,7 +100,6 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
 
 
-
             override fun onFinish() {
                 if (currentExercisePosition < exerciseList?.size!! - 1) {
                     setupRestView()
@@ -124,12 +128,12 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
     private fun setupRestView() {
-        try{
+        try {
             player = MediaPlayer.create(applicationContext, R.raw.press_start)
             player!!.isLooping = false
             player!!.start()
 
-        }catch(e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -151,13 +155,20 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             val result = tts!!.setLanguage(Locale.US)
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED)
                 Log.e("TTS", "The language specified is not supported")
-        }
-        else{
-            Log.e("TTS","Initialization Failed")
+        } else {
+            Log.e("TTS", "Initialization Failed")
         }
     }
-    private fun speakOut(text: String){
-        tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null,"")
+
+    private fun speakOut(text: String) {
+        tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null, "")
+    }
+
+    private fun setupExerciseStatusRecyclerView() {
+        rvExerciseStatus.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        exerciseAdapter = ExerciseStatusAdapter(exerciseList!!, this)
+        rvExerciseStatus.adapter = exerciseAdapter
     }
 
 }
