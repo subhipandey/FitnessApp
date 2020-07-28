@@ -1,5 +1,6 @@
 package com.subhipandey.android.workoutapp
 
+import BMIActivity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,6 +18,10 @@ class MainActivity : AppCompatActivity() {
         }
         llBMI.setOnClickListener {
             val intent = Intent(this, BMIActivity::class.java)
+            startActivity(intent)
+        }
+        llHistory.setOnClickListener {
+            val intent = Intent(this, HistoryActivity::class.java)
             startActivity(intent)
         }
     }
