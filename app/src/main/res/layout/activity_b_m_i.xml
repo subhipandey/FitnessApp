@@ -58,7 +58,6 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-
         <LinearLayout
             android:id="@+id/llMetricUnitsView"
             android:layout_width="match_parent"
@@ -128,6 +127,7 @@
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
+              
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilUsUnitHeightFeet"
@@ -166,7 +166,6 @@
             </LinearLayout>
         </LinearLayout>
 
-
         <LinearLayout
             android:id="@+id/llDiplayBMIResult"
             android:layout_width="match_parent"
@@ -183,8 +182,8 @@
                 android:gravity="center"
                 android:text="YOUR BMI"
                 android:textAllCaps="true"
-                android:textSize="16sp"
-                android:visibility="invisible" />
+                android:visibility="invisible"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvBMIValue"

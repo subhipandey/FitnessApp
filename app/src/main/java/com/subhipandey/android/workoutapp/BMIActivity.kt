@@ -1,9 +1,10 @@
+package com.subhipandey.android.workoutapp
+
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.subhipandey.android.workoutapp.R
 import kotlinx.android.synthetic.main.activity_b_m_i.*
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -17,17 +18,14 @@ class BMIActivity : AppCompatActivity() {
 
     private var currentVisibleView: String =
         METRIC_UNITS_VIEW
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_b_m_i)
 
         setSupportActionBar(toolbar_bmi_activity)
-
-        val actionbar = supportActionBar
-        if (actionbar != null) {
-            actionbar.setDisplayHomeAsUpEnabled(true)
-            actionbar.title = "CALCULATE BMI"
-        }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "CALCULATE BMI"
 
         toolbar_bmi_activity.setNavigationOnClickListener {
             onBackPressed()
@@ -46,10 +44,10 @@ class BMIActivity : AppCompatActivity() {
             }
         }
 
+
         btnCalculateUnits.setOnClickListener {
 
-
-            if (currentVisibleView == METRIC_UNITS_VIEW) {
+            if (currentVisibleView.equals(METRIC_UNITS_VIEW)) {
 
                 if (validateMetricUnits()) {
 
@@ -88,10 +86,10 @@ class BMIActivity : AppCompatActivity() {
                         usUnitHeightValueInch.toFloat() + usUnitHeightValueFeet.toFloat() * 12
 
 
-
                     val bmi = 703 * (usUnitWeightValue / (heightValue * heightValue))
 
                     displayBMIResult(bmi)
+                } else {
                     Toast.makeText(
                         this@BMIActivity,
                         "Please enter valid values.",
@@ -102,6 +100,7 @@ class BMIActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun makeVisibleMetricUnitsView() {
         currentVisibleView = METRIC_UNITS_VIEW
@@ -133,6 +132,7 @@ class BMIActivity : AppCompatActivity() {
         tvBMIDescription.visibility = View.INVISIBLE
     }
 
+
     private fun validateMetricUnits(): Boolean {
         var isValid = true
 
@@ -159,6 +159,7 @@ class BMIActivity : AppCompatActivity() {
 
         return isValid
     }
+
 
     private fun displayBMIResult(bmi: Float) {
 
